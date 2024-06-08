@@ -1,5 +1,3 @@
-// src/components/SearchResults.tsx
-
 import React from "react";
 import { List } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -14,8 +12,8 @@ const SearchResults: React.FC = () => {
 
   return (
     <List>
-      {searchResults.map((book: Book) => (
-        <BookListItem key={book.id} book={book} isInReadingList={false} />
+      {searchResults.map((book: Book, index: number) => (
+        <BookListItem key={index} book={book} isInReadingList={false} />
       ))}
     </List>
   );

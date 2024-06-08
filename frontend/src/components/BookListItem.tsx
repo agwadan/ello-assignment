@@ -1,5 +1,3 @@
-// src/components/BookListItem.tsx
-
 import React from "react";
 import { Button, ListItem, ListItemText } from "@mui/material";
 /* import { useDispatch } from "react-redux";

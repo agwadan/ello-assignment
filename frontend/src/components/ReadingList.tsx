@@ -1,5 +1,3 @@
-// src/components/ReadingList.tsx
-
 import React from "react";
 import { List, Typography } from "@mui/material";
 /* import { useSelector } from "react-redux"; */
