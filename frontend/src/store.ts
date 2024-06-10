@@ -32,7 +32,12 @@ const booksSlice = createSlice({
       state.error = null;
     },
     addToReadingList: (state, action: PayloadAction<Book>) => {
-      state.readingList.push(action.payload);
+      const exists = state.readingList.some(
+        book => book.title === action.payload.title && book.author === action.payload.author
+      );
+      if (!exists) {
+        state.readingList.push(action.payload);
+      }
     },
     removeFromReadingList: (state, action: PayloadAction<{ title: string; author: string }>) => {
       state.readingList = state.readingList.filter(
