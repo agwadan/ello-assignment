@@ -1,7 +1,9 @@
+// src/components/BookListItem.tsx
+
 import React from "react";
 import { Button, ListItem, ListItemText } from "@mui/material";
-/* import { useDispatch } from "react-redux";
-import { addToReadingList, removeFromReadingList } from "../store"; */
+import { useDispatch } from "react-redux";
+import { addToReadingList, removeFromReadingList } from "../store";
 import { Book } from "../types";
 
 interface Props {
@@ -10,14 +12,14 @@ interface Props {
 }
 
 const BookListItem: React.FC<Props> = ({ book, isInReadingList }) => {
-  /* const dispatch = useDispatch(); */
+  const dispatch = useDispatch();
 
   const handleAdd = () => {
-    /* dispatch(addToReadingList(book)); */
+    dispatch(addToReadingList(book));
   };
 
   const handleRemove = () => {
-    /* dispatch(removeFromReadingList(book.id)); */
+    dispatch(removeFromReadingList({ title: book.title, author: book.author }));
   };
 
   return (
