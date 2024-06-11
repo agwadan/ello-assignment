@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import BookListItem from "./BookListItem";
 import { Grid, Typography, Box } from "@mui/material";
+import { Book } from "../types";
 
 const ReadingList: React.FC = () => {
   const readingList = useSelector(
@@ -19,7 +20,7 @@ const ReadingList: React.FC = () => {
         </Typography>
       ) : (
         <Grid container spacing={2}>
-          {readingList.map((book, index) => (
+          {readingList.map((book: Book) => (
             <Grid
               item
               xs={12}

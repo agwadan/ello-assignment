@@ -24,7 +24,7 @@ const BookSearchBar: React.FC = () => {
   useEffect(() => {
     if (data) {
       dispatch(setSearchResults(data.books));
-      setOptions(data.books); // Set options to the fetched books when data is retrieved
+      setOptions(data.books);
     }
   }, [data, dispatch]);
 
@@ -42,13 +42,6 @@ const BookSearchBar: React.FC = () => {
     setSearchQueryState(e.target.value);
   };
 
-  /* const handleOptionSelect = (event: any, value: Book | null) => {
-    if (value) {
-      setSearchQueryState(value.title);
-      dispatch(setSearchQuery(value.title));
-    }
-  }; */
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -56,7 +49,6 @@ const BookSearchBar: React.FC = () => {
   const handleSearch = () => {
     if (searchQuery) {
       dispatch(setSearchQuery(searchQuery));
-      // No need to call getBooks here as the initial query has already fetched the data
     }
   };
 
@@ -137,7 +129,7 @@ const BookSearchBar: React.FC = () => {
             },
           }}
         >
-          <Tab label="Search Results" />
+          <Tab label="Books Store" />
           <Tab label="Reading List" />
         </Tabs>
       </Box>
