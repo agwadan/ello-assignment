@@ -4,6 +4,7 @@ import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Book } from './types';
 
 interface BooksState {
+  allBooks: Book[];
   searchQuery: string;
   searchResults: Book[];
   readingList: Book[];
@@ -12,6 +13,7 @@ interface BooksState {
 }
 
 const initialState: BooksState = {
+  allBooks: [],
   searchQuery: '',
   searchResults: [],
   readingList: [],
@@ -23,6 +25,9 @@ const booksSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
+    setAllBooks(state, action: PayloadAction<Book[]>) {
+      state.allBooks = action.payload;
+    },
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
     },
@@ -32,7 +37,12 @@ const booksSlice = createSlice({
       state.error = null;
     },
     addToReadingList: (state, action: PayloadAction<Book>) => {
-      state.readingList.push(action.payload);
+      const exists = state.readingList.some(
+        book => book.title === action.payload.title && book.author === action.payload.author
+      );
+      if (!exists) {
+        state.readingList.push(action.payload);
+      }
     },
     removeFromReadingList: (state, action: PayloadAction<{ title: string; author: string }>) => {
       state.readingList = state.readingList.filter(
@@ -49,6 +59,7 @@ const booksSlice = createSlice({
 });
 
 export const {
+  setAllBooks,
   setSearchQuery,
   setSearchResults,
   addToReadingList,
