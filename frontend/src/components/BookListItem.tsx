@@ -1,7 +1,14 @@
 // src/components/BookListItem.tsx
 
 import React from "react";
-import { Button, ListItem, ListItemText } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  CardMedia,
+  Button,
+  Typography,
+} from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addToReadingList, removeFromReadingList } from "../store";
 import { Book } from "../types";
@@ -23,18 +30,53 @@ const BookListItem: React.FC<Props> = ({ book, isInReadingList }) => {
   };
 
   return (
-    <ListItem>
-      <ListItemText primary={book.title} secondary={`Author: ${book.author}`} />
-      {isInReadingList ? (
-        <Button variant="contained" color="secondary" onClick={handleRemove}>
-          Remove
-        </Button>
-      ) : (
-        <Button variant="contained" color="primary" onClick={handleAdd}>
-          Add
-        </Button>
-      )}
-    </ListItem>
+    <Card>
+      <CardMedia
+        component="img"
+        height="140"
+        image={book.coverPhotoURL}
+        alt={`${book.title} cover`}
+      />
+      <CardContent>
+        <Typography variant="h6" component="div">
+          {book.title}
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          {`Author: ${book.author}`}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        {isInReadingList ? (
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{
+              background: "#F76434",
+              "&:hover": {
+                background: "#F76434",
+              },
+            }}
+            onClick={handleRemove}
+          >
+            Remove
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              background: "#5ACCCC",
+              "&:hover": {
+                background: "#53C2C2",
+              },
+            }}
+            onClick={handleAdd}
+          >
+            Add
+          </Button>
+        )}
+      </CardActions>
+    </Card>
   );
 };
 

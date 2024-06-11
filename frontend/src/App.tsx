@@ -18,12 +18,12 @@ const App: React.FC = () => {
         alt="Ello logo"
         src="https://github.com/ElloTechnology/backend_takehome/assets/3518127/561bc8d4-bffc-4360-b9ea-61e876bcec93"
       />
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{ color: "#335C6E" }}>
         Ello Book Assignment
       </Typography>
       <BookSearchBar />
-      <SearchResults />
-      <ReadingList />
+      {/* <SearchResults /> */}
+      {/* <ReadingList /> */}
     </Container>
   );
 };

@@ -10,3 +10,14 @@ query ExampleQuery {
   }
 }
 `;
+
+export const GET_ALL_BOOKS = gql`
+  query ExampleQuery {
+    books {
+      title
+      author
+      coverPhotoURL
+      readingLevel
+    }
+  }
+`;

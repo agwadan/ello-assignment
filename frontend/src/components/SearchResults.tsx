@@ -4,7 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import BookListItem from "./BookListItem";
-import { List } from "@mui/material";
+import { Grid } from "@mui/material";
 
 const SearchResults: React.FC = () => {
   const searchQuery = useSelector(
@@ -23,19 +23,27 @@ const SearchResults: React.FC = () => {
   );
 
   return (
-    <List>
+    <Grid container spacing={2}>
       {filteredResults.map((book, index) => (
-        <BookListItem
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
           key={`${book.title}-${book.author}`}
-          book={book}
-          isInReadingList={readingList.some(
-            (readingBook) =>
-              readingBook.title === book.title &&
-              readingBook.author === book.author
-          )}
-        />
+        >
+          <BookListItem
+            book={book}
+            isInReadingList={readingList.some(
+              (readingBook) =>
+                readingBook.title === book.title &&
+                readingBook.author === book.author
+            )}
+          />
+        </Grid>
       ))}
-    </List>
+    </Grid>
   );
 };
 
