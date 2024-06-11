@@ -1,9 +1,7 @@
-// src/components/BookSearchBar.tsx
-
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Box, Autocomplete, Tabs, Tab } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { setSearchQuery, setSearchResults } from "../store";
 import { GET_BOOKS } from "../queries";
 import { RootState } from "../store";
@@ -15,56 +13,88 @@ import TabPanel from "./TabPanel";
 const BookSearchBar: React.FC = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQueryState] = useState("");
-  const [getBooks, { data, loading, error }] = useLazyQuery(GET_BOOKS);
+  const { data, loading, error } = useQuery(GET_BOOKS);
   const searchResults = useSelector(
     (state: RootState) => state.books.searchResults
   );
+  const [options, setOptions] = useState<Book[]>([]);
+
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     if (data) {
       dispatch(setSearchResults(data.books));
+      setOptions(data.books); // Set options to the fetched books when data is retrieved
     }
   }, [data, dispatch]);
+
+  useEffect(() => {
+    setOptions(
+      searchResults.filter(
+        (book) =>
+          book.title &&
+          book.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, searchResults]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQueryState(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchQuery) {
-      dispatch(setSearchQuery(searchQuery));
-      getBooks({ variables: { title: searchQuery } });
-    }
-  };
-
-  const handleOptionSelect = (event: any, value: Book | null) => {
+  /* const handleOptionSelect = (event: any, value: Book | null) => {
     if (value) {
       setSearchQueryState(value.title);
       dispatch(setSearchQuery(value.title));
-      getBooks({ variables: { title: value.title } });
     }
-  };
+  }; */
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+  };
+
+  const handleSearch = () => {
+    if (searchQuery) {
+      dispatch(setSearchQuery(searchQuery));
+      // No need to call getBooks here as the initial query has already fetched the data
+    }
   };
 
   return (
     <Box>
       <Box
         component="form"
-        onSubmit={handleSubmit}
-        sx={{ alignItems: "center" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Autocomplete
           freeSolo
-          options={searchResults.filter(
-            (book) =>
-              book.title &&
-              book.title.toLowerCase().includes(searchQuery.toLowerCase())
-          )}
+          sx={{
+            width: "100%",
+            mr: "2rem",
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "32px",
+              color: "335C6",
+              "& fieldset": {
+                borderColor: "#5ACCCC",
+              },
+              "&:hover fieldset": {
+                borderColor: "#5ACCCC",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#5ACCCC",
+              },
+            },
+          }}
+          options={options}
           getOptionLabel={(option) => option.title || ""}
           renderInput={(params) => (
             <TextField
@@ -76,20 +106,16 @@ const BookSearchBar: React.FC = () => {
               onChange={handleInputChange}
               disabled={loading}
               helperText={error ? "Error fetching books" : ""}
-              sx={{
-                borderColor: "#5ACCCC",
-              }}
             />
           )}
-          onInputChange={(event, value) => setSearchQueryState(value)}
-          onChange={handleOptionSelect}
         />
         <Button
           type="submit"
           variant="contained"
           color="primary"
           disabled={loading}
-          sx={{ mt: 2, background: "#5ACCCC", justifyContent: "center" }}
+          onClick={handleSearch}
+          sx={{ background: "#5ACCCC", justifyContent: "center" }}
         >
           Search
         </Button>
@@ -100,6 +126,16 @@ const BookSearchBar: React.FC = () => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          sx={{
+            "& .MuiTabs-flexContainer": {
+              justifyContent: "space-evenly",
+            },
+
+            "& .Mui-selected": {
+              color: "#28B8B8",
+              background: "#CFFAFA",
+            },
+          }}
         >
           <Tab label="Search Results" />
           <Tab label="Reading List" />

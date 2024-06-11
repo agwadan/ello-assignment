@@ -1,5 +1,3 @@
-// src/components/TabPanel.tsx
-
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
@@ -25,7 +23,7 @@ const TabPanel: React.FC<TabPanelProps> = ({
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography sx={{ color: "#5ACCCC" }}>{children}</Typography>
         </Box>
       )}
     </div>
