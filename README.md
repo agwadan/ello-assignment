@@ -44,27 +44,23 @@ Run the application:
 Or, if you prefer using Yarn:
 
 `yarn run dev`
-The application should now be running at http://localhost:3000.
+The application should now be running at http://localhost:[PORT_NUMBER]
 
-Project Structure
-src/components: Contains the React components used in the application.
-src/queries: Contains GraphQL queries used to fetch book data.
-src/store: Contains Redux setup for state management.
-src/types: Contains TypeScript types for the project.
-Technologies Used
-React: A JavaScript library for building user interfaces.
-Material-UI: A popular React UI framework.
-Apollo Client: A comprehensive state management library for JavaScript that enables you to manage both local and remote data with GraphQL.
-Redux: A predictable state container for JavaScript apps.
-TypeScript: A strongly typed programming language that builds on JavaScript.
-Troubleshooting
-If you encounter any issues, try the following steps:
+## Project Structure
 
-Check your Node.js and npm/Yarn versions: Ensure you have the correct versions installed.
-Check your GraphQL server: Make sure your backend server is running and accessible.
-Check the console: Look for error messages in the browser's developer console for more details.
-Contributing
-If you'd like to contribute to this project, please fork the repository and use a feature branch. Pull requests are warmly welcome.
+- src/components: Contains the React components used in the application.
+- src/queries: Contains GraphQL queries used to fetch book data.
+- src/store: Contains Redux setup for state management.
+- src/types: Contains TypeScript types for the project.
 
-License
+## Technologies Used
+
+- React: A JavaScript library for building user interfaces.
+- Material-UI: A popular React UI framework.
+- Apollo Client: A comprehensive state management library for JavaScript that enables you to manage both local and remote data with GraphQL.
+- Redux: A predictable state container for JavaScript apps.
+- TypeScript: A strongly typed programming language that builds on JavaScript.
+
+## License
+
 This project is licensed under the MIT License. See the LICENSE file for details.
