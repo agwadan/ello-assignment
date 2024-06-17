@@ -2,10 +2,10 @@ import React from "react";
 import { Container, Typography, Box, styled } from "@mui/material";
 import BookSearchBar from "./components/BookSearchBar";
 
-const AppContainer = styled(Container)(({ theme }) => ({
+const AppContainer = styled(Container)({
   display: "flex",
   flexDirection: "column",
-}));
+});
 
 const ResponsiveHeading = styled(Typography)(({ theme }) => ({
   color: "#335C6E",
