@@ -36,21 +36,43 @@ const SearchBar = styled(Autocomplete)({
   },
 });
 
+const ContainerBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
 const TabBox = styled(Box)({
   borderBottom: 1,
   borderColor: "divider",
-  mt: 2,
+  marginTop: "2rem",
+});
+
+const SearchButton = styled(Button)({
+  background: "#5ACCCC",
+  justifyContent: "center",
+  borderRadius: "2rem",
+  padding: "13px 24px",
+
+  "&:hover": {
+    backgroundColor: COLORS.secondaryDark2,
+  },
 });
 
 const TabHeader = styled(Tabs)({
   "& .MuiTabs-flexContainer": {
-    justifyContent: "space-evenly",
+    justifyContent: "center",
   },
 
   "& .Mui-selected": {
     color: COLORS.primarySteelBlue,
     background: COLORS.secondary,
   },
+});
+
+const TabHeaderItem = styled(Tab)({
+  width: "100%",
 });
 
 const BookSearchBar: React.FC = () => {
@@ -103,17 +125,11 @@ const BookSearchBar: React.FC = () => {
 
   return (
     <Box>
-      <Box
+      <ContainerBox
         component="form"
         onSubmit={(e) => {
           e.preventDefault();
           handleSearch();
-        }}
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
         <SearchBar
@@ -133,17 +149,16 @@ const BookSearchBar: React.FC = () => {
             />
           )}
         />
-        <Button
+        <SearchButton
           type="submit"
           variant="contained"
           color="primary"
           disabled={loading}
           onClick={handleSearch}
-          sx={{ background: "#5ACCCC", justifyContent: "center" }}
         >
           Search
-        </Button>
-      </Box>
+        </SearchButton>
+      </ContainerBox>
 
       <TabBox>
         <TabHeader
@@ -151,8 +166,8 @@ const BookSearchBar: React.FC = () => {
           onChange={handleTabChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Books Store" />
-          <Tab label="Reading List" />
+          <TabHeaderItem label="Books Store" />
+          <TabHeaderItem label="Reading List" />
         </TabHeader>
       </TabBox>
       <TabPanel value={value} index={0}>
