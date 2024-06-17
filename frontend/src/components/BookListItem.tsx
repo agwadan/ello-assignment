@@ -6,23 +6,43 @@ import {
   CardMedia,
   Button,
   Typography,
+  styled,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addToReadingList, removeFromReadingList } from "../store";
 import { Book } from "../types";
+import { COLORS } from "../constants/colors";
 
+/* Defining Props that the component BookListItem expects */
 interface Props {
   book: Book;
   isInReadingList: boolean;
 }
 
+/* Initializing and styling components */
+const AddButton = styled(Button)({
+  background: COLORS.primary,
+  "&:hover": {
+    background: COLORS.secondaryDark2,
+  },
+});
+
+const RemoveButton = styled(Button)({
+  background: COLORS.secondaryYellow,
+  "&:hover": {
+    background: COLORS.secondaryOrange1,
+  },
+});
+
 const BookListItem: React.FC<Props> = ({ book, isInReadingList }) => {
   const dispatch = useDispatch();
 
+  /* Event Handler to add a book to reading list */
   const handleAdd = () => {
     dispatch(addToReadingList(book));
   };
 
+  /* Event Handler to remove a book from the reading list */
   const handleRemove = () => {
     dispatch(removeFromReadingList({ title: book.title, author: book.author }));
   };
@@ -45,33 +65,13 @@ const BookListItem: React.FC<Props> = ({ book, isInReadingList }) => {
       </CardContent>
       <CardActions>
         {isInReadingList ? (
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{
-              background: "#F76434",
-              "&:hover": {
-                background: "#F76434",
-              },
-            }}
-            onClick={handleRemove}
-          >
+          <RemoveButton variant="contained" onClick={handleRemove}>
             Remove
-          </Button>
+          </RemoveButton>
         ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              background: "#5ACCCC",
-              "&:hover": {
-                background: "#53C2C2",
-              },
-            }}
-            onClick={handleAdd}
-          >
+          <AddButton variant="contained" onClick={handleAdd}>
             Add
-          </Button>
+          </AddButton>
         )}
       </CardActions>
     </Card>

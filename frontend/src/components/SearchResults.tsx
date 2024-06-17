@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import BookListItem from "./BookListItem";
 import { Grid } from "@mui/material";
+import { Book } from "../types";
 
+/* Component to show list of books that match the search text */
 const SearchResults: React.FC = () => {
   const searchQuery = useSelector(
     (state: RootState) => state.books.searchQuery
@@ -15,14 +17,14 @@ const SearchResults: React.FC = () => {
     (state: RootState) => state.books.readingList
   );
 
-  // Filter search results based on the search query
+  /*Filter search results based on the search query*/
   const filteredResults = searchResults.filter((book) =>
     book.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <Grid container spacing={2}>
-      {filteredResults.map((book, index) => (
+      {filteredResults.map((book: Book) => (
         <Grid
           item
           xs={12}

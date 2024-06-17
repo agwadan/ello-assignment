@@ -1,14 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Box, Autocomplete, Tabs, Tab } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Autocomplete,
+  Tabs,
+  Tab,
+  styled,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
-import { setSearchQuery, setSearchResults } from "../store";
+import { setSearchQuery, setSearchResults, RootState } from "../store";
 import { GET_BOOKS } from "../queries";
-import { RootState } from "../store";
 import { Book } from "../types";
 import SearchResults from "./SearchResults";
 import ReadingList from "./ReadingList";
 import TabPanel from "./TabPanel";
+import { COLORS } from "../constants/colors";
+
+const SearchBar = styled(Autocomplete)({
+  width: "100%",
+  marginRight: "2rem",
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "32px",
+    color: "335C6",
+    "& fieldset": {
+      borderColor: COLORS.primary,
+    },
+    "&:hover fieldset": {
+      borderColor: COLORS.secondaryDark1,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: COLORS.secondaryDark2,
+    },
+  },
+});
+
+const TabBox = styled(Box)({
+  borderBottom: 1,
+  borderColor: "divider",
+  mt: 2,
+});
+
+const TabHeader = styled(Tabs)({
+  "& .MuiTabs-flexContainer": {
+    justifyContent: "space-evenly",
+  },
+
+  "& .Mui-selected": {
+    color: COLORS.primarySteelBlue,
+    background: COLORS.secondary,
+  },
+});
 
 const BookSearchBar: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,6 +64,8 @@ const BookSearchBar: React.FC = () => {
 
   const [value, setValue] = useState(0);
 
+  /* Hook to fill the options array with suggestions
+   as the user types in the search boc */
   useEffect(() => {
     if (data) {
       dispatch(setSearchResults(data.books));
@@ -28,6 +73,7 @@ const BookSearchBar: React.FC = () => {
     }
   }, [data, dispatch]);
 
+  /* Hook to fill options displayed in the AutoComplete of the searchbar */
   useEffect(() => {
     setOptions(
       searchResults.filter(
@@ -38,14 +84,17 @@ const BookSearchBar: React.FC = () => {
     );
   }, [searchQuery, searchResults]);
 
+  /* Function that detects change in the input field */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQueryState(e.target.value);
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  /* Function to handle the change in tabs i.e. Book Store & Reading List */
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  /* Function called when the search value is submited */
   const handleSearch = () => {
     if (searchQuery) {
       dispatch(setSearchQuery(searchQuery));
@@ -67,25 +116,8 @@ const BookSearchBar: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <Autocomplete
+        <SearchBar
           freeSolo
-          sx={{
-            width: "100%",
-            mr: "2rem",
-            "& .MuiOutlinedInput-root": {
-              borderRadius: "32px",
-              color: "335C6",
-              "& fieldset": {
-                borderColor: "#5ACCCC",
-              },
-              "&:hover fieldset": {
-                borderColor: "#5ACCCC",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#5ACCCC",
-              },
-            },
-          }}
           options={options}
           getOptionLabel={(option) => option.title || ""}
           renderInput={(params) => (
@@ -113,26 +145,16 @@ const BookSearchBar: React.FC = () => {
         </Button>
       </Box>
 
-      <Box sx={{ borderBottom: 1, borderColor: "divider", mt: 2 }}>
-        <Tabs
+      <TabBox>
+        <TabHeader
           value={value}
-          onChange={handleChange}
+          onChange={handleTabChange}
           aria-label="basic tabs example"
-          sx={{
-            "& .MuiTabs-flexContainer": {
-              justifyContent: "space-evenly",
-            },
-
-            "& .Mui-selected": {
-              color: "#28B8B8",
-              background: "#CFFAFA",
-            },
-          }}
         >
           <Tab label="Books Store" />
           <Tab label="Reading List" />
-        </Tabs>
-      </Box>
+        </TabHeader>
+      </TabBox>
       <TabPanel value={value} index={0}>
         <SearchResults />
       </TabPanel>
