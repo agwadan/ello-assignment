@@ -18,12 +18,12 @@ import ReadingList from "./ReadingList";
 import TabPanel from "./TabPanel";
 import { COLORS } from "../constants/colors";
 
-const SearchBar = styled(Autocomplete)({
+const SearchBar = styled(Autocomplete)(({ theme }) => ({
   width: "100%",
   marginRight: "2rem",
   "& .MuiOutlinedInput-root": {
     borderRadius: "32px",
-    color: "335C6",
+    color: COLORS.primarySteelBlue,
     "& fieldset": {
       borderColor: COLORS.primary,
     },
@@ -34,23 +34,58 @@ const SearchBar = styled(Autocomplete)({
       borderColor: COLORS.secondaryDark2,
     },
   },
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "0",
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "16px",
+    },
+  },
+}));
+
+const ContainerBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
 });
 
 const TabBox = styled(Box)({
   borderBottom: 1,
   borderColor: "divider",
-  mt: 2,
+  marginTop: "2rem",
 });
 
-const TabHeader = styled(Tabs)({
-  "& .MuiTabs-flexContainer": {
-    justifyContent: "space-evenly",
-  },
+const SearchButton = styled(Button)(({ theme }) => ({
+  background: "#5ACCCC",
+  justifyContent: "center",
+  borderRadius: "2rem",
+  padding: "13px 24px",
 
+  "&:hover": {
+    backgroundColor: COLORS.secondaryDark2,
+  },
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
+}));
+
+const TabHeader = styled(Tabs)(({ theme }) => ({
+  "& .MuiTabs-flexContainer": {
+    justifyContent: "center",
+  },
   "& .Mui-selected": {
     color: COLORS.primarySteelBlue,
     background: COLORS.secondary,
   },
+  [theme.breakpoints.down("sm")]: {
+    "& .MuiTabs-flexContainer": {
+      flexDirection: "column",
+    },
+  },
+}));
+
+const TabHeaderItem = styled(Tab)({
+  width: "100%",
 });
 
 const BookSearchBar: React.FC = () => {
@@ -103,17 +138,11 @@ const BookSearchBar: React.FC = () => {
 
   return (
     <Box>
-      <Box
+      <ContainerBox
         component="form"
         onSubmit={(e) => {
           e.preventDefault();
           handleSearch();
-        }}
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
         <SearchBar
@@ -133,17 +162,16 @@ const BookSearchBar: React.FC = () => {
             />
           )}
         />
-        <Button
+        <SearchButton
           type="submit"
           variant="contained"
           color="primary"
           disabled={loading}
           onClick={handleSearch}
-          sx={{ background: "#5ACCCC", justifyContent: "center" }}
         >
           Search
-        </Button>
-      </Box>
+        </SearchButton>
+      </ContainerBox>
 
       <TabBox>
         <TabHeader
@@ -151,8 +179,8 @@ const BookSearchBar: React.FC = () => {
           onChange={handleTabChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Books Store" />
-          <Tab label="Reading List" />
+          <TabHeaderItem label="Books Store" />
+          <TabHeaderItem label="Reading List" />
         </TabHeader>
       </TabBox>
       <TabPanel value={value} index={0}>
