@@ -1,5 +1,3 @@
-// src/components/ReadingList.tsx
-
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -7,7 +5,9 @@ import BookListItem from "./BookListItem";
 import { Grid, Typography, Box } from "@mui/material";
 import { Book } from "../types";
 
+/* Component to Display Books added to the reading list */
 const ReadingList: React.FC = () => {
+  /* Getting Books in the readingList from the redux store */
   const readingList = useSelector(
     (state: RootState) => state.books.readingList
   );

@@ -1,8 +1,7 @@
-// src/store.ts
-
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Book } from './types';
+import { Book } from '../types';
 
+/* Defining the shape of the BooksState Object */
 interface BooksState {
   allBooks: Book[];
   searchQuery: string;
@@ -12,6 +11,7 @@ interface BooksState {
   error: string | null;
 }
 
+/* Intitial values of the BooksState Object */
 const initialState: BooksState = {
   allBooks: [],
   searchQuery: '',
@@ -21,6 +21,7 @@ const initialState: BooksState = {
   error: null,
 };
 
+/* Bundling reducer logic and actions */
 const booksSlice = createSlice({
   name: 'books',
   initialState,

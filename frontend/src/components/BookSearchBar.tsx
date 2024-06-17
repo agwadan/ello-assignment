@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Box, Autocomplete, Tabs, Tab } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
-import { setSearchQuery, setSearchResults } from "../store";
+import { setSearchQuery, setSearchResults, RootState } from "../store";
 import { GET_BOOKS } from "../queries";
-import { RootState } from "../store";
+
 import { Book } from "../types";
 import SearchResults from "./SearchResults";
 import ReadingList from "./ReadingList";
@@ -21,6 +21,8 @@ const BookSearchBar: React.FC = () => {
 
   const [value, setValue] = useState(0);
 
+  /* Hook to fill the options array with suggestions
+   as the user types in the search boc */
   useEffect(() => {
     if (data) {
       dispatch(setSearchResults(data.books));
@@ -28,6 +30,7 @@ const BookSearchBar: React.FC = () => {
     }
   }, [data, dispatch]);
 
+  /* Hook to fill options displayed in the AutoComplete of the searchbar */
   useEffect(() => {
     setOptions(
       searchResults.filter(
@@ -38,14 +41,17 @@ const BookSearchBar: React.FC = () => {
     );
   }, [searchQuery, searchResults]);
 
+  /* Function that detects change in the input field */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQueryState(e.target.value);
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  /* Function to handle the change in tabs i.e. Book Store & Reading List */
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  /* Function called when the search value is submited */
   const handleSearch = () => {
     if (searchQuery) {
       dispatch(setSearchQuery(searchQuery));
@@ -116,7 +122,7 @@ const BookSearchBar: React.FC = () => {
       <Box sx={{ borderBottom: 1, borderColor: "divider", mt: 2 }}>
         <Tabs
           value={value}
-          onChange={handleChange}
+          onChange={handleTabChange}
           aria-label="basic tabs example"
           sx={{
             "& .MuiTabs-flexContainer": {
