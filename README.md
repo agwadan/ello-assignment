@@ -2,7 +2,7 @@
 
 # Ello Engineering Challenge
 
-This is a frontend application for searching books and managing a reading list. The application is built using React and Material-UI, and it interacts with a GraphQL backend to fetch book data.
+This is an application for searching books and managing a reading list. The application is built using React and Material-UI, and it interacts with a GraphQL backend to fetch book data.
 
 ## Features
 
@@ -12,19 +12,19 @@ This is a frontend application for searching books and managing a reading list. 
 
 ## Prerequisites
 
-Before running this application, make sure you have the following installed:
+Before running this application, it is important to have the following installed:
 
 - Node.js (v14 or later)
 - npm or Yarn
 
 ## Getting Started
 
-Follow these steps to set up and run the project:
+Follow these steps to set up and run the frontend of the project:
 
 Clone the repository:
 
 `git clone https://github.com/agwadan/ello-assignment.git`
-`cd ello-assignment`
+`cd ello-assignment/frontend`
 
 Install dependencies:
 
@@ -64,3 +64,16 @@ The application should now be running at http://localhost:[PORT_NUMBER]
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Screenshots
+### Search Bar With Suggestions
+![Ello - Google Chrome 17_06_2024 21_25_23](https://github.com/agwadan/ello-assignment/assets/30318555/15cb116f-d3fb-4649-bdbb-05bac7242fc8)
+
+### Search Results
+![image](https://github.com/agwadan/ello-assignment/assets/30318555/fcdc8dbb-33ab-486c-9248-1aeff58e9b95)
+
+### Mobile View Screenshots
+|Search Results|Reading List|
+|-|-|
+|![image](https://github.com/agwadan/ello-assignment/assets/30318555/84f68d76-b9e7-4543-9549-c677485d93da)|![image](https://github.com/agwadan/ello-assignment/assets/30318555/c9044e27-8938-4e52-a26e-b2246e165c96)|
+
