@@ -18,12 +18,12 @@ import ReadingList from "./ReadingList";
 import TabPanel from "./TabPanel";
 import { COLORS } from "../constants/colors";
 
-const SearchBar = styled(Autocomplete)({
+const SearchBar = styled(Autocomplete)(({ theme }) => ({
   width: "100%",
   marginRight: "2rem",
   "& .MuiOutlinedInput-root": {
     borderRadius: "32px",
-    color: "335C6",
+    color: COLORS.primarySteelBlue,
     "& fieldset": {
       borderColor: COLORS.primary,
     },
@@ -34,7 +34,13 @@ const SearchBar = styled(Autocomplete)({
       borderColor: COLORS.secondaryDark2,
     },
   },
-});
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "0",
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "16px",
+    },
+  },
+}));
 
 const ContainerBox = styled(Box)({
   display: "flex",
@@ -49,7 +55,7 @@ const TabBox = styled(Box)({
   marginTop: "2rem",
 });
 
-const SearchButton = styled(Button)({
+const SearchButton = styled(Button)(({ theme }) => ({
   background: "#5ACCCC",
   justifyContent: "center",
   borderRadius: "2rem",
@@ -58,18 +64,25 @@ const SearchButton = styled(Button)({
   "&:hover": {
     backgroundColor: COLORS.secondaryDark2,
   },
-});
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
+}));
 
-const TabHeader = styled(Tabs)({
+const TabHeader = styled(Tabs)(({ theme }) => ({
   "& .MuiTabs-flexContainer": {
     justifyContent: "center",
   },
-
   "& .Mui-selected": {
     color: COLORS.primarySteelBlue,
     background: COLORS.secondary,
   },
-});
+  [theme.breakpoints.down("sm")]: {
+    "& .MuiTabs-flexContainer": {
+      flexDirection: "column",
+    },
+  },
+}));
 
 const TabHeaderItem = styled(Tab)({
   width: "100%",
